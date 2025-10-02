@@ -2,7 +2,7 @@
 modfileVersion: "v1"
 id: github.com/SENERGY-Platform/mgw-wmbus-module
 name: wmbus Module
-version: v0.0.1
+version: v0.0.3
 type: device-connector
 deploymentType: single
 description: ""
