@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/SENERGY-Platform/mgw-modfile-lib/main/schema/v1.json
+modfileVersion: "v1"
+id: github.com/SENERGY-Platform/mgw-wmbus-module
+name: wmbus Module
+version: v0.0.1
+type: device-connector
+deploymentType: single
+description: ""
+license: "Apache License 2.0"
+dependencies:
+  github.com/SENERGY-Platform/mgw-mqtt-broker:
+    version: <v2.0.0
+    requiredServices:
+      broker:
+        - refVar: MQTT_BROKER
+          template: "tcp://{ref}:1881"
+          services:
+            - wmbus-dc
+hostResources:
+  device:
+    userInput:
+      name: SDR Device
+    targets:
+      - mountPoint: "/dev/sdr"
+        services:
+          - wmbusmeters
+services:
+  wmbusmeters:
+    name: wmbusmeters
+    image: wmbusmeters/wmbusmeters:release-1.19.0
+    include:
+      - mountPoint: /wmbusmeters_data/etc/wmbusmeters.conf
+        source: wmbusmeters.conf
+  wmbus-dc:
+    name: wmbus-dc
+    image: ghcr.io/senergy-platform/mgw-wmbus-dc:v0.0.2
+    
+volumes:
+  wmbusmeters_logs:
+    - mountPoint: /logs
+      services:
+        - wmbusmeters
+        - wmbus-dc
