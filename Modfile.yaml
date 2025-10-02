@@ -12,7 +12,7 @@ dependencies:
     version: <v2.0.0
     requiredServices:
       broker:
-        - refVar: MQTT_BROKER
+        - refVar: MQTT_CONN_STR
           template: "tcp://{ref}:1881"
           services:
             - wmbus-dc
